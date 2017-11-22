@@ -136,20 +136,17 @@ A helper function doMath is defined & takes 2 operands and an operator & then pe
 
 """
 
-from projects.interactive_python.problem_solving_with_alg_and_data_struct import StackTopAtEnd
+from projects.interactive_python.problem_solving_with_algs_and_data_struct.chp3_linear_structures.stack import StackTopAtEnd
 
 
 # General Infix-to-Postfix Conversion:
 def infix_to_postfix(infix_expr):
-
-    precedence = {}
-    precedence["^"] = 4
-    precedence["*"] = 3
-    precedence["/"] = 3
-    precedence["+"] = 2
-    precedence["-"] = 2
-    precedence["("] = 1
-
+    prec = {}
+    prec["*"] = 3
+    prec["/"] = 3
+    prec["+"] = 2
+    prec["-"] = 2
+    prec["("] = 1
     operators_stack = StackTopAtEnd()
     postfix_list = []
     token_list = infix_expr.split()
@@ -157,14 +154,15 @@ def infix_to_postfix(infix_expr):
     for token in token_list:
         if token in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" or token in "0123456789":
             postfix_list.append(token)
-        elif token == "(":
+        elif token == '(':
             operators_stack.push(token)
-        elif token == ")":
-            top_stack = operators_stack.pop()
-            while token is not "(":
-                postfix_list.append(top_stack)
+        elif token == ')':
+            top_token = operators_stack.pop()
+            while top_token != '(':
+                postfix_list.append(top_token)
+                top_token = operators_stack.pop()
         else:
-            while not operators_stack.is_empty() and precedence[operators_stack.peek()] >= precedence[token]:
+            while (not operators_stack.is_empty()) and (prec[operators_stack.peek()] >= prec[token]):
                 postfix_list.append(operators_stack.pop())
             operators_stack.push(token)
 
@@ -205,10 +203,10 @@ def main():
     print(infix_to_postfix("A * B + C * D"))
     print(infix_to_postfix("( A + B ) * C - ( D - E ) * ( F + G )"))
     print(postfix_eval('7 8 + 3 2 + /'))
-    print(infix_to_postfix("5 * 3 ^ ( 4 - 2 )"))
+    #print(infix_to_postfix("5 * 3 ^ ( 4 - 2 )"))
 
 
-# main()
+main()
 # class Test(unittest.TestCase):
 #     def test_infix_to_postfix(self):
 #         self.assertEqual(infix_to_postfix("( A + B ) * ( C + D )"), "A B + C D + *")

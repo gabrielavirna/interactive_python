@@ -32,7 +32,7 @@ E.g. Divide by 2 the integer 233
 
 import unittest
 
-from projects.interactive_python.problem_solving_with_alg_and_data_struct import StackTopAtEnd
+from projects.interactive_python.problem_solving_with_algs_and_data_struct.chp3_linear_structures.stack import StackTopAtEnd
 
 
 # Divide by 2: to convert a decimal number value into a binary number
