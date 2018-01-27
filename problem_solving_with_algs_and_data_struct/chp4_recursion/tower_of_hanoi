@@ -1,0 +1,70 @@
+"""
+Tower of Hanoi
+--------------
+
+Legend: The Tower of Hanoi puzzle - tells of a Hindu temple where the puzzle was presented to young priests.
+At the beginning of time, the priests were given three poles and a stack of 64 gold disks, each disk a little smaller
+than the one beneath it. Their assignment was to transfer all 64 disks from one of the three poles to another, with two
+important constraints. They could only move one disk at a time, and they could never place a larger disk on top
+of a smaller one. The priests worked very efficiently, day and night, moving one disk every second.
+When they finished their work, the legend said, the temple would crumble into dust and the world would vanish.
+
+A configuration of disks: [fromPole withPole toPole] in the middle of a move from the 1st peg to the 3rd.
+Note the rule: the disks on each peg are stacked so that smaller disks are always on top of the larger disks.
+
+
+Solving this problem recursively
+--------------------------------
+What is our base case? (think about this problem from the bottom up).
+Suppose you have a tower of five disks, originally on peg one. If you already knew how to move a tower of four disks to
+peg two, you could then easily move the bottom disk to peg three, and then move the tower of four from peg two to peg 3.
+But what if you do not know how to move a tower of height four? Suppose that you knew how to move a tower of height 3 to
+peg three; then it would be easy to move the fourth disk to peg two and move the three from peg three on top of it.
+But what if you do not know how to move a tower of three? How about moving a tower of two disks to peg two and then
+moving the third disk to peg three, and then moving the tower of height two on top of it?
+
+But what about moving a single disk to peg three ? It is easy enough, trivial <= Base Case.
+
+
+Steps to move a tower from the starting pole, to the goal pole, using an intermediate pole:
+-----------------------------------------------------------------------------------------
+1. Move a tower of height-1 to an intermediate pole, using the final pole.
+2. Move the remaining disk to the final pole.
+3. Move the tower of height-1 from the intermediate pole to the final pole using the original pole.
+
+The base case:
+--------------
+The simplest Tower of Hanoi problem: a tower of 1 disk. In this case, move only a single disk to its final destination.
+In addition, the steps outlined above move us toward the base case by reducing the height of the tower in steps 1 and 3.
+
+
+Why we do not have a data structure that explicitly keeps track of what disks are on what poles?
+Hint: if you were going to explicitly keep track of the disks, you would probably use 3 Stack objects, one for each pole.
+The answer is that Python provides the stacks that we need implicitly through the call stack.
+
+
+"""
+
+
+def move_tower(height, initial_pole, helper_pole, final_pole):
+    # The base case: when the tower height is 0 (nothing to do, so the moveTower function simply returns).
+    if height >= 1:
+        # 1st recursive call: move all but the bottom disk on the initial tower to an intermediate pole.
+        move_tower(height - 1, initial_pole, final_pole, helper_pole)
+        move_disk(initial_pole, final_pole)
+        # 2nd recursive call:  move the tower from the intermediate pole to the top of the largest disk.
+        move_tower(height - 1, helper_pole, initial_pole, final_pole)
+
+
+def move_disk(ip, fp):
+    print("moving disk from: {} to: {}".format(ip, fp))
+
+
+def main():
+    move_tower(3, "A", "B", "C")
+
+
+if __name__ == "__main__":
+        main()
+
+

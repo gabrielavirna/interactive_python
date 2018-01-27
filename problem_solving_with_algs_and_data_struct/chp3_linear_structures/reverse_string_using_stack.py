@@ -1,7 +1,7 @@
 # Q. Write a function rev_string(my_str) that uses a stack to reverse the characters in a string.
 import unittest
 
-from projects.interactive_python.problem_solving_with_alg_and_data_struct import StackTopAtEnd
+from projects.interactive_python.problem_solving_with_algs_and_data_struct.chp3_linear_structures.stack import StackTopAtEnd
 
 
 def rev_string(my_str):
